@@ -33,18 +33,18 @@
         <option value="office">Übergabe an der Geschäftsstelle</option>
         <option value="pickup">Abholung durch Sammelfahrzeug</option>
       </select>
+      <div id="addressField" style="display: none; margin-top: 10px;">
+    <label for="address">Abholadresse:</label><br>
+    <input type="text" id="address" placeholder="Straße, Hausnummer"><br><br>
 
-      <div id="addressFields" class="hidden">
-        <label>Straße & Hausnummer</label>
-        <input type="text" id="street">
+    <label for="plz">Postleitzahl:</label><br>
+    <input type="text" id="plz" maxlength="5" placeholder="PLZ">
+  </div>
 
-        <label>Postleitzahl</label>
-        <input type="text" id="zip" maxlength="5">
-
-        <label>Ort</label>
-        <input type="text" id="city">
-      </div>
-
+  <br>
+  <button type="submit">Spende registrieren</button>
+</form>
+    
       <label>Art der Kleidung</label>
       <select id="clothing" required>
         <option>Jacken</option>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bestätigung</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <img src="assets/logo.png" class="logo" alt="Logo">
+  </div>
+</header>
+
+<main class="confirmation">
+  <h2>Spende erfolgreich registriert</h2>
+<p><strong>Kleidungsart:</strong> <span id="outClothing"></span></p>
+<p><strong>Krisengebiet:</strong> <span id="outCrisis"></span></p>
+<p><strong>Ort:</strong> <span id="outLocation"></span></p>
+<p><strong>Datum:</strong> <span id="outDate"></span></p>
+<p><strong>Uhrzeit:</strong> <span id="outTime"></span></p>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  document.getElementById("outClothing").textContent = params.get("clothing");
+  document.getElementById("outCrisis").textContent = params.get("crisis");
+  document.getElementById("outLocation").textContent = params.get("location");
+
+  const now = new Date();
+  document.getElementById("outDate").textContent = now.toLocaleDateString();
+  document.getElementById("outTime").textContent = now.toLocaleTimeString();
+</script>
+`;
+</main>
+
+<footer>
+  <p>Vielen Dank für deine Unterstützung!</p>
+</footer>
+
+<script src="js/confirm.js"></script>
+</body>
+</html>

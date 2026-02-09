@@ -1,42 +1,36 @@
-const method = document.getElementById("method");
-const addressFields = document.getElementById("addressFields");
-const form = document.getElementById("donationForm");
+// PLZ der Geschäftsstelle (fest hinterlegt)
+const officePLZ = "39"; // erste zwei Ziffern
 
-const OFFICE_ZIP_PREFIX = "12"; // PLZ der Geschäftsstelle (z.B. 12xxx)
+const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+const addressField = document.getElementById("addressField");
 
-method.addEventListener("change", () => {
-  addressFields.classList.toggle("hidden", method.value !== "pickup");
+deliveryOptions.forEach(option => {
+  option.addEventListener("change", () => {
+    if (option.value === "pickup" && option.checked) {
+      addressField.style.display = "block";
+    } else {
+      addressField.style.display = "none";
+    }
+  });
 });
+document.getElementById("donationForm").addEventListener("submit", function (e) {
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+  const pickupSelected = document.querySelector('input[name="delivery"]:checked').value === "pickup";
 
-  const clothing = document.getElementById("clothing").value;
-  const crisis = document.getElementById("crisis").value;
+  if (pickupSelected) {
+    const plzInput = document.getElementById("plz").value;
 
-  let location = "Geschäftsstelle";
-
-  if (method.value === "pickup") {
-    const street = document.getElementById("street").value;
-    const zip = document.getElementById("zip").value;
-    const city = document.getElementById("city").value;
-
-    if (!zip.startsWith(OFFICE_ZIP_PREFIX)) {
-      alert("Die Abholadresse liegt nicht im Einzugsgebiet der Geschäftsstelle.");
+    if (plzInput.length < 2) {
+      alert("Bitte eine gültige Postleitzahl eingeben.");
+      e.preventDefault();
       return;
     }
 
-    location = `${street}, ${zip} ${city}`;
+    const pickupPLZPrefix = plzInput.substring(0, 2);
+
+    if (pickupPLZPrefix !== officePLZ) {
+      alert("Die Abholadresse liegt nicht im Einzugsgebiet der Geschäftsstelle.");
+      e.preventDefault();
+    }
   }
-
-  const data = {
-    clothing,
-    crisis,
-    location,
-    date: new Date().toLocaleDateString(),
-    time: new Date().toLocaleTimeString()
-  };
-
-  localStorage.setItem("donationData", JSON.stringify(data));
-  window.location.href = "confirm.html";
 });

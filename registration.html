@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spende registrieren</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+max-width: 600px;
+margin:auto;
+padding:30px;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:15px;
+}
+
+input, select{
+width:100%;
+padding:8px;
+margin-top:5px;
+}
+
+button{
+margin-top:20px;
+padding:12px;
+width:100%;
+background:#2c7be5;
+color:white;
+border:none;
+font-size:16px;
+cursor:pointer;
+}
+
+.hidden{
+display:none;
+}
+
+.error{
+color:red;
+font-size:14px;
+margin-top:5px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>Kleiderspende registrieren</h1>
+
+<form id="donationForm">
+
+<label>Übergabeart</label>
+<select id="method" required>
+<option value="">Bitte auswählen</option>
+<option value="office">Übergabe an der Geschäftsstelle</option>
+<option value="pickup">Abholung durch Sammelfahrzeug</option>
+</select>
+
+<div id="addressFields" class="hidden">
+
+<label>Abholadresse</label>
+<input type="text" id="address" placeholder="Straße und Hausnummer">
+
+<label>Postleitzahl</label>
+<input type="text" id="plz" maxlength="5" placeholder="PLZ">
+
+<p id="plzError" class="error"></p>
+
+</div>
+
+<label>Art der Kleidung</label>
+<select id="clothing" required>
+<option value="">Bitte auswählen</option>
+<option>Jacken</option>
+<option>Hosen</option>
+<option>Schuhe</option>
+<option>Winterkleidung</option>
+<option>Kinderkleidung</option>
+</select>
+
+<label>Krisengebiet</label>
+<select id="crisis" required>
+<option value="">Bitte auswählen</option>
+<option>Ukraine</option>
+<option>Syrien</option>
+<option>Somalia</option>
+<option>Türkei (Erdbebenregion)</option>
+</select>
+
+<button type="submit">Spende registrieren</button>
+
+</form>
+
+<script>
+
+const method = document.getElementById("method");
+const addressFields = document.getElementById("addressFields");
+const plzInput = document.getElementById("plz");
+const plzError = document.getElementById("plzError");
+const form = document.getElementById("donationForm");
+
+/* Beispiel PLZ der Geschäftsstelle */
+const officePrefix = "39";
+
+/* Adresse anzeigen wenn Abholung */
+method.addEventListener("change", function(){
+
+if(this.value === "pickup"){
+addressFields.classList.remove("hidden");
+}else{
+addressFields.classList.add("hidden");
+plzError.textContent = "";
+}
+
+});
+
+/* Live-PLZ-Validierung */
+plzInput.addEventListener("input", function(){
+
+let plz = plzInput.value;
+
+if(plz.length >= 2){
+
+if(plz.substring(0,2) !== officePrefix){
+plzError.textContent = "Adresse liegt nicht im Einzugsgebiet der Geschäftsstelle.";
+}else{
+plzError.textContent = "";
+}
+
+}else{
+plzError.textContent = "";
+}
+
+});
+
+/* Formular senden */
+form.addEventListener("submit", function(event){
+
+event.preventDefault();
+
+let methodValue = method.value;
+let clothing = document.getElementById("clothing").value;
+let crisis = document.getElementById("crisis").value;
+let address = document.getElementById("address").value;
+let plz = plzInput.value;
+
+/* Sicherheitsprüfung */
+if(methodValue === "pickup"){
+
+if(plz.substring(0,2) !== officePrefix){
+
+plzError.textContent = "Die Abholadresse liegt außerhalb des Sammelgebietes.";
+return;
+
+}
+
+}
+
+/* Daten an confirmation.html übergeben */
+
+let url =
+"confirmation.html?method=" + encodeURIComponent(methodValue) +
+"&clothing=" + encodeURIComponent(clothing) +
+"&crisis=" + encodeURIComponent(crisis) +
+"&address=" + encodeURIComponent(address) +
+"&plz=" + encodeURIComponent(plz);
+
+window.location.href = url;
+
+});
+
+</script>
+
+</body>
+</html>

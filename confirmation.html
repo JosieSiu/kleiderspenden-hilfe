@@ -1,26 +1,54 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bestätigung</title>
-  <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spendenbestätigung</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
 </head>
+
 <body>
 
 <header>
   <div class="header-inner">
-    <img src="assets/logo.png" class="logo" alt="Logo">
+    <img src="assets/logo.png" alt="Kleiderspenden Hilfe Logo" class="logo">
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="registration.html">Neue Spende</a>
+    </nav>
   </div>
 </header>
 
-<main class="confirmation">
-  <h2>Spende erfolgreich registriert</h2>
-<p><strong>Kleidungsart:</strong> <span id="outClothing"></span></p>
-<p><strong>Krisengebiet:</strong> <span id="outCrisis"></span></p>
-<p><strong>Ort:</strong> <span id="outLocation"></span></p>
-<p><strong>Datum:</strong> <span id="outDate"></span></p>
-<p><strong>Uhrzeit:</strong> <span id="outTime"></span></p>
+<main>
+
+<section class="intro">
+<h1>Vielen Dank für deine Spende!</h1>
+<p>Deine Kleiderspende wurde erfolgreich registriert.</p>
+</section>
+
+<section class="form-section">
+
+<p><strong>Übergabeart:</strong> <span id="method"></span></p>
+<p><strong>Kleidung:</strong> <span id="clothing"></span></p>
+<p><strong>Krisengebiet:</strong> <span id="crisis"></span></p>
+<p><strong>Adresse:</strong> <span id="address"></span></p>
+<p><strong>PLZ:</strong> <span id="plz"></span></p>
+
+<!-- NEU -->
+<p><strong>Ort:</strong> <span id="city"></span></p>
+<p><strong>Datum:</strong> <span id="date"></span></p>
+<p><strong>Uhrzeit:</strong> <span id="time"></span></p>
+<!-- NEU -->
+
+</section>
+
+</main>
+
+<footer>
+<p>© 2026 Kleiderspenden Hilfe · Datenschutz · Impressum</p>
+</footer>
 
 <script>
 
@@ -32,13 +60,22 @@ document.getElementById("crisis").textContent = params.get("crisis");
 document.getElementById("address").textContent = params.get("address");
 document.getElementById("plz").textContent = params.get("plz");
 
+/* NEU: Ort festlegen */
+document.getElementById("city").textContent = "Burg";
+
+/* NEU: Datum und Uhrzeit erzeugen */
+const now = new Date();
+
+const date = now.toLocaleDateString("de-DE");
+const time = now.toLocaleTimeString("de-DE", {
+hour: "2-digit",
+minute: "2-digit"
+});
+
+document.getElementById("date").textContent = date;
+document.getElementById("time").textContent = time;
+
 </script>
-</main>
 
-<footer>
-  <p>Vielen Dank für deine Unterstützung!</p>
-</footer>
-
-<script src="js/confirm.js"></script>
 </body>
 </html>

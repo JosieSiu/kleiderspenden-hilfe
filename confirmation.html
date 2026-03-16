@@ -23,17 +23,16 @@
 <p><strong>Uhrzeit:</strong> <span id="outTime"></span></p>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
 
-  document.getElementById("outClothing").textContent = params.get("clothing");
-  document.getElementById("outCrisis").textContent = params.get("crisis");
-  document.getElementById("outLocation").textContent = params.get("location");
+const params = new URLSearchParams(window.location.search);
 
-  const now = new Date();
-  document.getElementById("outDate").textContent = now.toLocaleDateString();
-  document.getElementById("outTime").textContent = now.toLocaleTimeString();
+document.getElementById("method").textContent = params.get("method");
+document.getElementById("clothing").textContent = params.get("clothing");
+document.getElementById("crisis").textContent = params.get("crisis");
+document.getElementById("address").textContent = params.get("address");
+document.getElementById("plz").textContent = params.get("plz");
+
 </script>
-`;
 </main>
 
 <footer>
